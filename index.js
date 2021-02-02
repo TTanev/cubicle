@@ -1,21 +1,13 @@
 const express = require("express")
-const handlebars = require("express-handlebars")
+
 const config = require("./config/config")
+const expressConfig = require("./config/express")
 const app = express()
 
-app.engine(
-  "hbs",
-  handlebars({
-    extname: "hbs",
-  })
-)
-
-app.use(express.static("public"))
-
-app.set("view engine", "hbs")
+expressConfig(app)
 
 app.get("/", (req, res) => {
-  res.render("home")
+  res.render("home", { layout: false })
 })
 
 app.listen(config.PORT, () =>
