@@ -4,8 +4,8 @@ const homeController = require("./controllers/homeController")
 
 const router = Router()
 
+router.use("/", homeController)
 router.use("/products", productController)
-router.use("/about", homeController)
 router.get("*", (req, res) => {
   res.render("404")
 })
