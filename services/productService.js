@@ -3,10 +3,10 @@ const Cube = require("../models/Cube")
 const productData = require("../data/productData")
 
 function getAll(query) {
-  let products = productsData.getAll()
+  let products = productData.getAll()
 
   if (query.search) {
-    products = productsData.filter((x) =>
+    products = products.filter((x) =>
       x.name.toLowerCase().includes(query.search.toLowerCase())
     )
   }
