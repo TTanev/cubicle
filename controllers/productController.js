@@ -1,5 +1,7 @@
 const { Router } = require("express")
 const productService = require("../services/productService")
+const { validateProduct } = require("./helpers/productHelpers")
+
 const router = Router()
 
 router.get("/", (req, res) => {
@@ -12,8 +14,7 @@ router.get("/create", (req, res) => {
   res.render("create", { title: "Create" })
 })
 
-router.post("/create", (req, res) => {
-  // validate inputs dont input req.body into cube directly but 1 by 1
+router.post("/create", validateProduct, (req, res) => {
   productService.create(req.body)
 
   res.redirect("/products")
@@ -21,8 +22,9 @@ router.post("/create", (req, res) => {
 
 router.get("/details/:productId", (req, res) => {
   console.log(req.params.productId)
+  let product = productService.getOne(req.params.productId)
 
-  res.render("details", { title: "Product Details" })
+  res.render("details", { title: "Product Details", product })
 })
 
 module.exports = router
