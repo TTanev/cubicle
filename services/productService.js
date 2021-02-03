@@ -4,8 +4,23 @@ const fs = require("fs").promises
 const path = require("path")
 let productsData = require("../config/products.json")
 
-function getAll() {
-  return productsData
+function getAll(query) {
+  let result = productsData
+
+  if (query.search) {
+    result = productsData.filter((x) =>
+      x.name.toLowerCase().includes(query.search.toLowerCase())
+    )
+  }
+
+  if (query.from) {
+    result = result.filter((x) => Number(x.level) >= query.from)
+  }
+
+  if (query.to) {
+    result = result.filter((x) => Number(x.level) <= query.to)
+  }
+  return result
 }
 
 function getOne(id) {
